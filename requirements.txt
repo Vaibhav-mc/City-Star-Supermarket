@@ -1,5 +1,5 @@
 # Core Flask packages
-Flask
+Flask==2.3.3
 Flask-Login
 flask-pymysql
 Flask-WTF
