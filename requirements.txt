@@ -1,0 +1,52 @@
+Flask
+Flask-Login
+Flask-MySQL
+Flask-WTF
+Flask-Mail
+Flask-SQLAlchemy
+Flask-Migrate
+Flask-Session
+Flask-Bcrypt
+
+# Database
+PyMySQL
+mysql-connector-python
+SQLAlchemy
+
+# Security
+Werkzeug
+bcrypt
+python-dotenv
+itsdangerous
+cryptography
+
+# Forms and Validation
+WTForms
+email-validator
+
+# Date/Time Processing
+python-dateutil
+pytz
+
+# Testing
+pytest
+pytest-flask
+coverage
+
+# Development Tools
+python-decouple
+black
+flake8
+isort
+
+# Utilities
+Pillow  # For image processing
+reportlab  # For PDF generation
+XlsxWriter  # For Excel export
+requests
+click
+Jinja2
+MarkupSafe
+
+# Production
+gunicorn
