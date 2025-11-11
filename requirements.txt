@@ -1,6 +1,7 @@
+# Core Flask packages
 Flask
 Flask-Login
-Flask-MySQL
+Flask-MySQLdb
 Flask-WTF
 Flask-Mail
 Flask-SQLAlchemy
@@ -9,6 +10,7 @@ Flask-Session
 Flask-Bcrypt
 
 # Database
+mysqlclient
 PyMySQL
 mysql-connector-python
 SQLAlchemy
@@ -40,9 +42,9 @@ flake8
 isort
 
 # Utilities
-Pillow  # For image processing
-reportlab  # For PDF generation
-XlsxWriter  # For Excel export
+Pillow        # For image processing
+reportlab     # For PDF generation
+XlsxWriter    # For Excel export
 requests
 click
 Jinja2
