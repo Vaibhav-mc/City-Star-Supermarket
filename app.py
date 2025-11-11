@@ -1,16 +1,22 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
-from flask_mysqldb import MySQL
+from flask_pymysql import MySQL   # ✅ Changed from flask_mysqldb to flask_pymysql
 from datetime import datetime, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 import re
+import os
 
 app = Flask(__name__)
 app.config.from_object('config.Config')
-app.secret_key = app.config['SECRET_KEY']  # Move to config file
+app.secret_key = app.config['SECRET_KEY']
 
-# Initialize MySQL connection with DictCursor
+# ✅ MySQL Configuration (Render friendly)
+app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST', 'your-db-host')
+app.config['MYSQL_USER'] = os.getenv('MYSQL_USER', 'your-username')
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD', 'your-password')
+app.config['MYSQL_DB'] = os.getenv('MYSQL_DB', 'your-database-name')
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+
 mysql = MySQL(app)
 
 # Login required decorator
@@ -28,36 +34,31 @@ def get_db_cursor():
     return mysql.connection.cursor()
 
 def validate_email(email):
-    # Fix: Remove UGX suffix and use a more standard email regex pattern
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     return re.match(pattern, email) is not None
 
 def validate_password(password):
     return len(password) >= 8
 
-# Home Page
+# ================= ROUTES BELOW ====================
+
 @app.route('/')
 def index():
     if 'user_id' in session:
         return redirect(url_for('dashboard'))
     return render_template('index.html')
 
-# Dashboard
 @app.route('/dashboard')
 @login_required
 def dashboard():
     try:
         cur = get_db_cursor()
-        
-        # Get total products
         cur.execute("SELECT COUNT(*) as count FROM products")
         total_products = cur.fetchone()['count']
-        
-        # Get low stock products
+
         cur.execute("SELECT COUNT(*) as count FROM products WHERE quantity < 10")
         low_stock = cur.fetchone()['count']
-        
-        # Get today's sales
+
         cur.execute("""
             SELECT COUNT(*) as count, 
                    COALESCE(SUM(total_amount), 0) as total
@@ -65,7 +66,7 @@ def dashboard():
             WHERE DATE(sale_time) = CURDATE()
         """)
         sales_data = cur.fetchone()
-        
+
         return render_template('dashboard.html',
                              total_products=total_products,
                              low_stock=low_stock,
@@ -77,6 +78,7 @@ def dashboard():
         return render_template('dashboard.html', error=True)
     finally:
         cur.close()
+
 
 # User Registration
 @app.route('/register', methods=['GET', 'POST'])
@@ -664,4 +666,6 @@ def low_stock():
         cur.close()
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # ✅ Run on Render-friendly port
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)

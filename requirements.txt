@@ -1,7 +1,7 @@
 # Core Flask packages
 Flask
 Flask-Login
-Flask-MySQLdb
+flask-pymysql
 Flask-WTF
 Flask-Mail
 Flask-SQLAlchemy
@@ -10,7 +10,6 @@ Flask-Session
 Flask-Bcrypt
 
 # Database
-mysqlclient
 PyMySQL
 mysql-connector-python
 SQLAlchemy
