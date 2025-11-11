@@ -74,20 +74,3 @@ Follow these steps to set up the project locally:
 
 This project is open source and available under the [MIT License](LICENSE).
 
-## 👥 Authors
-
-- [whitehathackerpr](https://github.com/whitehathackerpr)
-
-## 🙏 Acknowledgments
-
-- Flask community
-- Python developers
-- All contributors who help improve this project
-
-## 📞 Contact
-
-Project Link: [https://github.com/whitehathackerpr/City-Star-Supermarket](https://github.com/whitehathackerpr/City-Star-Supermarket)
-
----
-
-⭐️ If you find this project useful, please consider giving it a star!
